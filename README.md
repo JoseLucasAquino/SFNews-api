@@ -20,7 +20,7 @@ cd /path/to/project
 ```
 - Execute o comando abaixo para baixar o código do projeto
 ```
-git clone endereço do repositório no github
+git clone git@github.com:JoseLucasAquino/SFNews-api.git
 ```
 
 - Caso já utilize containers, tenha certeza que a porta 8188 esteja livre
