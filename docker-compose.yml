@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  server:
+    container_name: sfnews
+    restart: always
+    build: .
+    volumes:
+      - ./app:/app
+    ports:
+      - 8188:80

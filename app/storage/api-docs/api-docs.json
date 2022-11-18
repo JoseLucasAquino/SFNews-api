@@ -1,0 +1,432 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "OpenApi Documentation For Space Flight News",
+        "description": "Documentation intended to guide the use of the API to access spaceflight news articles",
+        "contact": {
+            "email": "sfnews_admin@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8188",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/api/": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Get Welcome Message",
+                "description": "Returns welcome message",
+                "operationId": "getWelcomeMessage",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/welcome_message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get list of articles",
+                "description": "Returns list of articles",
+                "operationId": "getArticlesList",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArticleResourceCollection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Store new article",
+                "description": "Returns article data",
+                "operationId": "storeArticle",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateArticleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArticleResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/articles/{id}": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get article information",
+                "description": "Returns article data",
+                "operationId": "getArticleById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArticleResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Update existing article",
+                "description": "Returns updated article data",
+                "operationId": "updateArticle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateArticleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArticleResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Delete existing article",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteArticle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "welcome_message": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Back-end Challenge 2021 - Space Flight News"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateArticleRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "example title"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": "http://exampleurl.com"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "example": "http://exampleurl.com/exampleimage.png"
+                    },
+                    "news_site": {
+                        "type": "string",
+                        "example": "Example Site"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "example": "example summary"
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "article_updated_at": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "launches": {
+                        "type": "string",
+                        "example": "[]"
+                    },
+                    "events": {
+                        "type": "string",
+                        "example": "[]"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateArticleRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "example title"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": "http://exampleurl.com"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "example": "http://exampleurl.com/exampleimage.png"
+                    },
+                    "news_site": {
+                        "type": "string",
+                        "example": "Example Site"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "example": "example summary"
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "article_updated_at": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "launches": {
+                        "type": "string",
+                        "example": "[]"
+                    },
+                    "events": {
+                        "type": "string",
+                        "example": "[]"
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "example title"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": "http://exampleurl.com"
+                    },
+                    "imageUrl": {
+                        "type": "string",
+                        "example": "http://exampleurl.com/exampleimage.png"
+                    },
+                    "newsSite": {
+                        "type": "string",
+                        "example": "Example Stite"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "example": "example summary"
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2022-11-09T15:29:14.000Z"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "launches": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "events": {
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "ArticleResourceCollection": {
+                "type": "array",
+                "items": {
+                    "$ref": "#components/schemas/ArticleResource"
+                }
+            }
+        },
+        "parameters": {
+            "page": {
+                "name": "page",
+                "in": "query",
+                "description": "A pagina alvo",
+                "required": true,
+                "schema": {
+                    "type": "integer",
+                    "example": "1"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Space Flight News",
+            "description": "API Endpoints of Space Flight News"
+        }
+    ]
+}
